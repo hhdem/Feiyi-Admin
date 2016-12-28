@@ -11,6 +11,7 @@ pids
 logs
 results
 
+<<<<<<< HEAD
 npm-debug.log*
 .nvmrc
 .bowerrc
@@ -49,3 +50,13 @@ Session.vim
 /libpeerconnection.log
 npm-debug.log
 testem.log
+=======
+npm-debug.log
+node_modules
+
+.idea/*
+*.iml
+projectFilesBackup
+
+.DS_Store
+>>>>>>> 5923886572e2cd8bb5bc242872c31d1e9689a0e6
