@@ -48,6 +48,21 @@
             {{/gh-form-group}}
 
             <div class="form-group">
+                <label for="area-input">Areas</label>
+                {{gh-selectize
+                id="area-input"
+                multiple=false
+                maxItems=1
+                selection=model.area
+                content=availableAreas
+                optionValuePath="content.id"
+                optionLabelPath="content.name"
+                openOnFocus=false
+                select-item="changeArea"
+                plugins="remove_button, drag_drop"}}
+            </div>
+
+            <div class="form-group">
                 <label for="tag-input">Tags</label>
                 {{gh-selectize
                     id="tag-input"
@@ -66,7 +81,7 @@
             <div class="form-group for-select">
                 <label for="author-list">Author</label>
                 <span class="input-icon icon-user">
-                    <span class="gh-select" tabindex="0">
+                    <span class="gh-select" tabindex="1">
                     {{one-way-select
                         id="author-list"
                         name="post-setting-author"

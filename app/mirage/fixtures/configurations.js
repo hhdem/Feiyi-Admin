@@ -12,6 +12,7 @@ export default [{
     routeKeywords: {
         tag: 'tag',
         author: 'author',
+        area: 'area',
         page: 'page',
         preview: 'p',
         private: 'private'

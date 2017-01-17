@@ -3,21 +3,20 @@ import computed, {equal} from 'ember-computed';
 import observer from 'ember-metal/observer';
 import injectService from 'ember-service/inject';
 import {guidFor} from 'ember-metal/utils';
-
-// import DS from 'ember-data';
-// import {belongsTo, hasMany} from 'ember-data/relationships';
+import {hasMany, belongsTo} from 'ember-data/relationships';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import ValidationEngine from 'ghost-admin/mixins/validation-engine';
 
 export default Model.extend(ValidationEngine, {
-    validationType: 'category',
-
+    validationType: 'area',
+    code: attr('string'),
     name: attr('string'),
     slug: attr('string'),
     description: attr('string'),
-    parent: attr(),
-    childrens: attr(),
+    parent: belongsTo('area', {inverse: 'children'}),
+    children: hasMany('area', {inverse: 'parent'}),
+    parentId: attr('string'),
     metaTitle: attr('string'),
     metaDescription: attr('string'),
     image: attr('string'),
@@ -34,8 +33,8 @@ export default Model.extend(ValidationEngine, {
     feature: injectService(),
 
     // HACK: ugly hack to main compatibility with selectize as used in the
-    // PSM tags input
-    // TODO: remove once we've switched over to EPS for the tags input
+    // PSM areas input
+    // TODO: remove once we've switched over to EPS for the areas input
     uuid: computed(function () {
         return guidFor(this);
     }),

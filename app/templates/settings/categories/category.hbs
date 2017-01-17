@@ -1,0 +1,11 @@
+{{gh-category-settings-form category=category
+                       setProperty=(action "setProperty")
+                       showDeleteCategoryModal=(action "toggleDeleteCategoryModal")}}
+
+{{#if showDeleteCategoryModal}}
+    {{gh-fullscreen-modal "delete-category"
+                          model=category
+                          confirm=(action "deleteCategory")
+                          close=(action "toggleDeleteCategoryModal")
+                          modifier="action wide"}}
+{{/if}}

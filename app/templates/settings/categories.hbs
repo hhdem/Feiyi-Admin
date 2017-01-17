@@ -1,0 +1,27 @@
+<section class="gh-view">
+    <header class="view-header">
+        {{#gh-view-title openMobileMenu="openMobileMenu"}}<span>Categories</span>{{/gh-view-title}}
+        <section class="view-actions">
+            {{#link-to "settings.categories.new" class="btn btn-green" title="New Category"}}New Category{{/link-to}}
+            {{!-- <button type="button" class="btn btn-green" {{action "newCategory"}}>New Category</button> --}}
+        </section>
+    </header>
+
+    {{#gh-categories-management-container categories=categories selectedCategory=selectedCategory enteredMobile="enteredMobile" leftMobile="leftMobile" as |container|}}
+        {{#gh-infinite-scroll
+            fetch="loadNextPage"
+            isLoading=isLoading
+            classNames="category-list"
+            as |checkScroll|
+        }}
+            <section class="category-list-content settings-categories {{if categoryListFocused 'keyboard-focused'}}">
+                {{#each categories as |category|}}
+                    {{gh-category category=category onDelete=(action checkScroll)}}
+                {{/each}}
+            </section>
+        {{/gh-infinite-scroll}}
+        <section class="settings-menu-container category-settings {{if categoryContentFocused 'keyboard-focused'}} {{if container.displaySettingsPane 'category-settings-in'}}">
+            {{outlet}}
+        </section>
+    {{/gh-categories-management-container}}
+</section>

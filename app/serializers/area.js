@@ -6,27 +6,24 @@ import EmbeddedRecordsMixin from 'ember-data/serializers/embedded-records-mixin'
 const {String: {pluralize}} = Ember;
 
 export default ApplicationSerializer.extend(EmbeddedRecordsMixin, {
-    // settings for the EmbeddedRecordsMixin.
     attrs: {
-        tags: {embedded: 'always'},
-        publishedAtUTC: {key: 'published_at'},
         createdAtUTC: {key: 'created_at'},
-        updatedAtUTC: {key: 'updated_at'}
+        updatedAtUTC: {key: 'updated_at'},
+        parent: {embedded: 'always'}
     },
 
     normalize(model, hash, prop) {
         // this is to enable us to still access the raw authorId
         // without requiring an extra get request (since it is an
         // async relationship).
-        if ((prop === 'post' || prop === 'posts') && hash.author !== undefined) {
-            hash.author_id = hash.author;
+        if ((prop === 'area' || prop === 'areas') && !!hash.parent && !!hash.parent.id) {
+            hash.parent_id = hash.parent.id;
+        } else {
+            delete hash.parent;
+            delete hash.parent_id;
         }
 
-        if ((prop === 'post' || prop === 'posts') && hash.area !== undefined) {
-            hash.area_id = hash.area;
-        }
-
-        return this._super(...arguments);
+        return this._super(model, hash, prop);
     },
 
     normalizeSingleResponse(store, primaryModelClass, payload) {
@@ -38,11 +35,33 @@ export default ApplicationSerializer.extend(EmbeddedRecordsMixin, {
             delete payload[pluralizedRoot];
         }
 
-        return this._super(...arguments);
+        return this._super(store, primaryModelClass, payload);
     },
 
     normalizeArrayResponse() {
         return this._super(...arguments);
+    },
+
+    serialize(record, options) {
+        let json = {};
+
+        record.eachAttribute(function(name) {
+            json[name.underscore()] = record.attr(name);
+        });
+
+        if (options && options.includeId) {
+            json.id = record.id;
+        }
+
+        return json;
+    },
+
+    serializeBelongsTo(snapshot, json, relationship) {
+        let key = relationship.key;
+
+        let belongsTo = snapshot.belongsTo(key);
+
+        json[key] = Ember.isNone(belongsTo) ? belongsTo : belongsTo.record.toJSON();
     },
 
     serializeIntoHash(hash, type, record, options) {
@@ -52,16 +71,6 @@ export default ApplicationSerializer.extend(EmbeddedRecordsMixin, {
         // We have a plural root in the API
         let root = pluralize(type.modelName);
         let data = this.serialize(record, options);
-
-        // Properties that exist on the model but we don't want sent in the payload
-
-        delete data.uuid;
-        delete data.html;
-        // Inserted locally as a convenience.
-        delete data.author_id;
-        delete data.area_id;
-        // Read-only virtual property.
-        delete data.url;
 
         hash[root] = [data];
     }

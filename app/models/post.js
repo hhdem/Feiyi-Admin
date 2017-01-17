@@ -93,6 +93,8 @@ export default Model.extend(Comparable, ValidationEngine, {
         embedded: 'always',
         async: false
     }),
+    area: belongsTo('area', {async: true}),
+    areaId: attr('string'),
     url: attr('string'),
 
     config: injectService(),
@@ -146,6 +148,14 @@ export default Model.extend(Comparable, ValidationEngine, {
 
         tags.removeObjects(oldTags);
         oldTags.invoke('deleteRecord');
+    },
+
+    updateAreas() {
+        let areas = this.get('areas');
+        let oldAreas = areas.filterBy('id', null);
+
+        areas.removeObjects(oldAreas);
+        oldAreas.invoke('deleteRecord');
     },
 
     isAuthoredByUser(user) {

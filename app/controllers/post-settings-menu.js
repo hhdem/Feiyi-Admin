@@ -17,6 +17,7 @@ const {ArrayProxy, Handlebars, PromiseProxyMixin} = Ember;
 
 export default Controller.extend(SettingsMenuMixin, {
     selectedAuthor: null,
+    selectedArea: null,
 
     application: injectController(),
     config: injectService(),
@@ -122,6 +123,13 @@ export default Controller.extend(SettingsMenuMixin, {
     // live-query of all tags for tag input autocomplete
     availableTags: computed(function () {
         return this.get('store').filter('tag', {limit: 'all'}, () => {
+            return true;
+        });
+    }),
+
+    // live-query of all tags for tag input autocomplete
+    availableAreas: computed(function () {
+        return this.get('store').filter('area', {limit: 'all'}, () => {
             return true;
         });
     }),
@@ -469,6 +477,32 @@ export default Controller.extend(SettingsMenuMixin, {
             if (tag.get('isNew')) {
                 tag.destroyRecord();
             }
+        },
+
+        changeArea(newArea) {
+            let area = this.get('model.area');
+            let model = this.get('model');
+            let newId = (!newArea)? null : newArea.get('id');
+
+            // return if nothing changed
+            if (!!area && newId === area.get('id')) {
+                return;
+            }
+
+            model.set('area', newArea);
+            model.set('areaId', newId);
+
+            // if this is a new post (never been saved before), don't try to save it
+            if (this.get('model.isNew')) {
+                return;
+            }
+
+            model.save().catch((error) => {
+                this.showError(error);
+                this.set('selectedArea', area);
+                model.rollbackAttributes();
+            });
         }
+
     }
 });

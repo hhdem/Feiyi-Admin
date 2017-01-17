@@ -1,0 +1,27 @@
+<section class="gh-view">
+    <header class="view-header">
+        {{#gh-view-title openMobileMenu="openMobileMenu"}}<span>Areas</span>{{/gh-view-title}}
+        <section class="view-actions">
+            {{#link-to "settings.areas.new" class="btn btn-green" title="New Area"}}New Area{{/link-to}}
+            {{!-- <button type="button" class="btn btn-green" {{action "newArea"}}>New Area</button> --}}
+        </section>
+    </header>
+
+    {{#gh-areas-management-container areas=areas selectedArea=selectedArea enteredMobile="enteredMobile" leftMobile="leftMobile" as |container|}}
+        {{#gh-infinite-scroll
+            fetch="loadNextPage"
+            isLoading=isLoading
+            classNames="area-list"
+            as |checkScroll|
+        }}
+            <section class="area-list-content settings-areas {{if areaListFocused 'keyboard-focused'}}">
+                {{#each areas as |area|}}
+                    {{gh-area area=area onDelete=(action checkScroll)}}
+                {{/each}}
+            </section>
+        {{/gh-infinite-scroll}}
+        <section class="settings-menu-container area-settings {{if areaContentFocused 'keyboard-focused'}} {{if container.displaySettingsPane 'area-settings-in'}}">
+            {{outlet}}
+        </section>
+    {{/gh-areas-management-container}}
+</section>

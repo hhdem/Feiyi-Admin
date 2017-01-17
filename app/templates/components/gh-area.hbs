@@ -1,0 +1,14 @@
+<div class="settings-area">
+    {{#link-to 'settings.areas.area' area class="area-edit-button"}}
+        <span class="area-title">{{area.name}}</span>
+        <span class="label label-default">/{{area.slug}}</span>
+
+        {{#if area.isInternal}}
+            <span class="label label-blue">internal</span>
+        {{/if}}
+
+        <p class="area-description">{{area.description}}</p>
+        <span class="areas-count">{{area.count.posts}}</span>
+        <span class="areas-count">A-{{area.count.areas}}</span>
+    {{/link-to}}
+</div>

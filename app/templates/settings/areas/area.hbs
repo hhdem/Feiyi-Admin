@@ -1,0 +1,11 @@
+{{gh-area-settings-form area=area
+                       setProperty=(action "setProperty")
+                       showDeleteAreaModal=(action "toggleDeleteAreaModal")}}
+
+{{#if showDeleteAreaModal}}
+    {{gh-fullscreen-modal "delete-area"
+                          model=area
+                          confirm=(action "deleteArea")
+                          close=(action "toggleDeleteAreaModal")
+                          modifier="action wide"}}
+{{/if}}

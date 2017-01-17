@@ -51,6 +51,14 @@ GhostRouter.map(function () {
         this.route('tag', {path: ':tag_slug'});
         this.route('new');
     });
+    this.route('settings.categories', {path: '/settings/categories'}, function () {
+        this.route('category', {path: ':category_slug'});
+        this.route('new');
+    });
+    this.route('settings.areas', {path: '/settings/areas'}, function () {
+        this.route('area', {path: ':area_slug'});
+        this.route('new');
+    });
     this.route('settings.labs', {path: '/settings/labs'});
     this.route('settings.code-injection', {path: '/settings/code-injection'});
     this.route('settings.navigation', {path: '/settings/navigation'});

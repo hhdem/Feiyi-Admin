@@ -42,6 +42,8 @@
 @import "layouts/user.css";
 @import "layouts/about.css";
 @import "layouts/tags.css";
+@import "layouts/categories.css";
+@import "layouts/areas.css";
 @import "layouts/error.css";
 @import "layouts/apps.css";
 @import "layouts/packages.css";

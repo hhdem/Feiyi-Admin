@@ -1,0 +1,13 @@
+<div class="settings-category">
+    {{#link-to 'settings.categories.category' category class="category-edit-button"}}
+        <span class="category-title">{{category.name}}</span>
+        <span class="label label-default">/{{category.slug}}</span>
+
+        {{#if category.isInternal}}
+            <span class="label label-blue">internal</span>
+        {{/if}}
+
+        <p class="category-description">{{category.description}}</p>
+        <span class="categories-count">{{category.count.posts}}</span>
+    {{/link-to}}
+</div>

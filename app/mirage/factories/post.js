@@ -14,6 +14,7 @@ export default Mirage.Factory.extend({
     meta_description(i) { return  `Meta description for post ${i}.`; },
     meta_title(i) { return  `Meta Title for post ${i}`; },
     author_id() { return  1; },
+    area_id() { return  1; },
     updated_at() { return  '2015-10-19T16:25:07.756Z'; },
     updated_by() { return  1; },
     published_at() { return  '2015-12-19T16:25:07.000Z'; },
