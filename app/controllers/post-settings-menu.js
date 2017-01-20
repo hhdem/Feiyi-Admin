@@ -482,7 +482,7 @@ export default Controller.extend(SettingsMenuMixin, {
         changeArea(newArea) {
             let area = this.get('model.area');
             let model = this.get('model');
-            let newId = (!newArea)? null : newArea.get('id');
+            let newId = (!newArea) ? null : newArea.get('id');
 
             // return if nothing changed
             if (!!area && newId === area.get('id')) {

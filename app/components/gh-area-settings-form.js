@@ -33,6 +33,8 @@ export default Component.extend({
     scratchName: boundOneWay('area.name'),
     scratchCode: boundOneWay('area.code'),
     scratchSlug: boundOneWay('area.slug'),
+    scratchLat: boundOneWay('area.lat'),
+    scratchLng: boundOneWay('area.lng'),
     scratchDescription: boundOneWay('area.description'),
     scratchMetaTitle: boundOneWay('area.metaTitle'),
     scratchMetaDescription: boundOneWay('area.metaDescription'),
@@ -156,7 +158,7 @@ export default Component.extend({
 
         changeParent(newParent) {
             let parent = this.area.get('parent');
-            let newId = (!newParent)? null : newParent.get('id');
+            let newId = (!newParent) ? null : newParent.get('id');
 
             // return if nothing changed
             if (!!parent && newId === parent.get('id')) {

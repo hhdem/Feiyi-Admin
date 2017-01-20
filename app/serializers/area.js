@@ -61,7 +61,7 @@ export default ApplicationSerializer.extend(EmbeddedRecordsMixin, {
 
         let belongsTo = snapshot.belongsTo(key);
 
-        json[key] = Ember.isNone(belongsTo) ? belongsTo : belongsTo.record.toJSON();
+        json[key] = Ember.isEmpty(belongsTo) ? belongsTo : belongsTo.record.toJSON();
     },
 
     serializeIntoHash(hash, type, record, options) {

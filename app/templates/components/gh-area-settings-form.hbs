@@ -44,6 +44,18 @@
                 plugins="remove_button, drag_drop"}}
             </div>
 
+            {{#gh-form-group errors=area.errors hasValidated=area.hasValidated property="lat"}}
+                <label for="area-lat">Lat</label>
+                {{gh-input scratchLat id="area-lat" name="lat" type="text" focusOut=(action 'setProperty' 'lat' scratchLat) update=(action (mut scratchLat))}}
+                {{gh-error-message errors=activearea.errors property="lat"}}
+            {{/gh-form-group}}
+
+            {{#gh-form-group errors=area.errors hasValidated=area.hasValidated property="lng"}}
+                <label for="area-lng">Lng</label>
+                {{gh-input scratchLng id="area-lng" name="lng" type="text" focusOut=(action 'setProperty' 'lng' scratchLng) update=(action (mut scratchLng))}}
+                {{gh-error-message errors=activearea.errors property="lng"}}
+            {{/gh-form-group}}
+
             {{#gh-form-group errors=area.errors hasValidated=area.hasValidated property="slug"}}
                 <label for="area-slug">URL</label>
                 {{gh-input scratchSlug id="area-slug" name="slug" type="text" focusOut=(action 'setProperty' 'slug' scratchSlug) update=(action (mut scratchSlug))}}

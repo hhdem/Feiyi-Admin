@@ -32,6 +32,9 @@ export default Model.extend(ValidationEngine, {
 
     feature: injectService(),
 
+    lat: attr('string'),
+    lng: attr('string'),
+
     // HACK: ugly hack to main compatibility with selectize as used in the
     // PSM areas input
     // TODO: remove once we've switched over to EPS for the areas input

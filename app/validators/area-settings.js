@@ -1,7 +1,7 @@
 import BaseValidator from './base';
 
 export default BaseValidator.create({
-    properties: ['name', 'code', 'slug', 'description', 'metaTitle', 'metaDescription'],
+    properties: ['name', 'lat', 'lng', 'code', 'slug', 'description', 'metaTitle', 'metaDescription'],
 
     name(model) {
         let name = model.get('name');
@@ -24,10 +24,10 @@ export default BaseValidator.create({
         if (validator.empty(code)) {
             model.get('errors').add('code', 'You must specify a code for the area.');
             this.invalidate();
-        } else if (name.match(/^,/)) {
+        } else if (code.match(/^,/)) {
             model.get('errors').add('code', 'Area code can\'t start with commas.');
             this.invalidate();
-        } else if (!validator.isLength(name, 0, 150)) {
+        } else if (!validator.isLength(code, 0, 150)) {
             model.get('errors').add('code', 'Area code cannot be longer than 150 characters.');
             this.invalidate();
         }
@@ -65,6 +65,30 @@ export default BaseValidator.create({
 
         if (!validator.isLength(metaDescription, 0, 200)) {
             model.get('errors').add('metaDescription', 'Meta Description cannot be longer than 200 characters.');
+            this.invalidate();
+        }
+    },
+
+    lat(model) {
+        let lat = model.get('lat');
+
+        if (!!lat && !lat.match(/^[-+]?[0-9]*\.?[0-9]+$/)) {
+            model.get('errors').add('lat', 'Area lat must be a double value.');
+            this.invalidate();
+        } else if (!validator.isLength(lat, 0, 15)) {
+            model.get('errors').add('lat', 'Area lat cannot be longer than 15 characters.');
+            this.invalidate();
+        }
+    },
+
+    lng(model) {
+        let lng = model.get('lng');
+
+        if (!!lng && !lng.match(/^[-+]?[0-9]*\.?[0-9]+$/)) {
+            model.get('errors').add('lng', 'Area lng must be a double value.');
+            this.invalidate();
+        } else if (!validator.isLength(lng, 0, 15)) {
+            model.get('errors').add('lng', 'Area lng cannot be longer than 15 characters.');
             this.invalidate();
         }
     }
